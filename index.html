@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>GLA Distribuição</h1>
+</header>
+
+<input  id="search"
+  type="text" 
+  placeholder="Buscar produto..." 
+  oninput="filtrarProdutos()"
+ 
+>
+
+
+<main>
+  <section id="produtos"></section>
+
+  <aside id="sidebar">
+    <h2>Carrinho</h2>
+    <ul id="carrinho"></ul>
+    <p class="total">Total: R$ <span id="total">0.00</span></p>
+    <button onclick="enviarWhatsApp()" class="btn-whats">
+      Enviar pelo WhatsApp
+    </button>
+    <button onclick="limparCarrinho()" class="btn-limpar">
+  Limpar carrinho
+</button>
+
+  </aside>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

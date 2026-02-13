@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #dfdbd1;
+}
+
+header {
+  background: #ec701c;
+  color: rgb(0, 0, 0);
+  padding: 1rem;
+  text-align: center;
+}
+
+#search {
+  width:95%; 
+  padding: 1rem; 
+  font-size:1rem; 
+  margin:10px 2rem;
+  border: 0.2rem solid #000000;
+  border-radius: 0.5rem;;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 1fr; 
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
+
+/* PRODUTOS */
+#produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.produto {
+  background: transparent;
+  border: 0.18rem solid #ec701c;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.produto img {
+  width: 100%;
+  height: 11.25rem;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.produto h3 {
+  font-size: 1rem;
+  margin: 0.5rem 0.2rem;
+  text-align: center;
+}
+
+.produto p {
+  font-weight: normal;
+  color: #000000;
+  margin: 0.5rem 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.produto h4 {
+  font-weight: bold;
+  color: #980000;
+  font-size: 1.5rem;
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-style: bold;
+  margin: 0;
+  padding: 0,2rem;
+  text-align: center;
+}
+
+.produto input {
+  margin-top: auto;
+  padding: 0.3rem;
+  border: solid 2px;
+  border-radius: 0.5rem;
+}
+
+.quantidade-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espaço entre input e texto */
+}
+
+.quantidade-container input {
+  width: 3.75rem;
+}
+
+.produto button {
+  margin-top: 0.8rem;
+  padding: 0.5rem;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 0.31rem;
+  cursor: pointer;
+}
+
+.produto button:hover {
+  background: #333;
+}
+
+/* CARRINHO */
+#sidebar {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 0.93rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 1.25rem;
+  height: fit-content;
+}
+
+#carrinho {
+  list-style: none;
+  padding: 0;
+  max-height: 18.75rem;
+  overflow-y: auto;
+}
+
+#carrinho li {
+  border-bottom: 1px solid #ddd;
+  padding: 0.31rem 0;
+}
+
+.total {
+  font-size: 1.12rem;
+  font-weight: bold;
+  margin-top: 0.62rem;
+}
+
+/* BOTÃO WHATSAPP */
+.btn-whats {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.62rem;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 0.31rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-whats:hover {
+  background: #1ebe5b;
+}
+
+/* BOTÃO LIMPAR CARRINHO */
+.btn-limpar {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.62rem;
+  background: #d32525;
+  color: white;
+  border: none;
+  border-radius: 0.31rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* RESPONSIVO */
+@media (max-width: 800px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  #sidebar {
+    position: static;
+  }
+}
+
+/*acrescentado para tentar adaptr em celular*/
+
+/* CELULARES */
+@media (max-width: 600px) {
+
+  body {
+    padding: 10px;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  #sidebar {
+    width: 100%;
+    position: static;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+}
