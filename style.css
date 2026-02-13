@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
+/* ===================== */
+/* RESET */
+/* ===================== */
+
 * {
   box-sizing: border-box;
 }
@@ -10,6 +14,10 @@ body {
   background: #dfdbd1;
 }
 
+/* ===================== */
+/* HEADER */
+/* ===================== */
+
 header {
   background: #ec701c;
   color: rgb(0, 0, 0);
@@ -18,22 +26,29 @@ header {
 }
 
 #search {
-  width:95%; 
-  padding: 1rem; 
-  font-size:1rem; 
+  width:95%;
+  padding: 1rem;
+  font-size:1rem;
   margin:10px 2rem;
   border: 0.2rem solid #000000;
-  border-radius: 0.5rem;;
+  border-radius: 0.5rem;
 }
+
+/* ===================== */
+/* LAYOUT DESKTOP */
+/* ===================== */
 
 main {
   display: grid;
-  grid-template-columns: 3fr 1fr; 
+  grid-template-columns: 3fr 1fr;
   gap: 1.25rem;
   padding: 1.25rem;
 }
 
+/* ===================== */
 /* PRODUTOS */
+/* ===================== */
+
 #produtos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -64,39 +79,30 @@ main {
 }
 
 .produto p {
-  font-weight: normal;
-  color: #000000;
+  color: #000;
   margin: 0.5rem 0.2rem;
   margin-bottom: 1rem;
 }
 
 .produto h4 {
-  font-weight: bold;
   color: #980000;
   font-size: 1.5rem;
   font-family: "Anton", sans-serif;
-  font-weight: 400;
-  font-style: bold;
   margin: 0;
-  padding: 0,2rem;
   text-align: center;
-}
-
-.produto input {
-  margin-top: auto;
-  padding: 0.3rem;
-  border: solid 2px;
-  border-radius: 0.5rem;
 }
 
 .quantidade-container {
   display: flex;
   align-items: center;
-  gap: 8px; /* espaço entre input e texto */
+  gap: 8px;
 }
 
 .quantidade-container input {
   width: 3.75rem;
+  padding: 0.3rem;
+  border: solid 2px;
+  border-radius: 0.5rem;
 }
 
 .produto button {
@@ -113,7 +119,10 @@ main {
   background: #333;
 }
 
-/* CARRINHO */
+/* ===================== */
+/* CARRINHO DESKTOP */
+/* ===================== */
+
 #sidebar {
   background: white;
   border-radius: 0.5rem;
@@ -142,7 +151,8 @@ main {
   margin-top: 0.62rem;
 }
 
-/* BOTÃO WHATSAPP */
+/* BOTÕES */
+
 .btn-whats {
   width: 100%;
   padding: 0.75rem;
@@ -159,7 +169,6 @@ main {
   background: #1ebe5b;
 }
 
-/* BOTÃO LIMPAR CARRINHO */
 .btn-limpar {
   width: 100%;
   padding: 0.75rem;
@@ -172,22 +181,14 @@ main {
   cursor: pointer;
 }
 
-/* RESPONSIVO */
-@media (max-width: 800px) {
-  main {
-    grid-template-columns: 1fr;
-  }
+/* ============================= */
+/* 📱 MOBILE — CARRINHO APP */
+/* ============================= */
 
-  #sidebar {
-    position: static;
-  }
+#cart-handle {
+  display: none;
 }
 
-/*acrescentado para tentar adaptr em celular*/
-
-/* ========================= */
-/* 📱 MOBILE REAL (CELULARES) */
-/* ========================= */
 @media (max-width: 600px) {
 
   body {
@@ -198,7 +199,6 @@ main {
     font-size: 1.6rem;
   }
 
-  /* busca maior */
   #search {
     width: 100%;
     margin: 10px 0;
@@ -206,20 +206,18 @@ main {
     padding: 14px;
   }
 
-  /* layout em coluna */
   main {
-    grid-template-columns: 1fr;
+    display: block;
     padding: 0;
-    gap: 1rem;
   }
 
-  /* ✅ 1 PRODUTO POR LINHA */
+  /* 1 produto por linha */
   #produtos {
     grid-template-columns: 1fr;
     gap: 16px;
+    margin-bottom: 90px;
   }
 
-  /* card maior */
   .produto {
     padding: 14px;
     border-width: 3px;
@@ -229,7 +227,6 @@ main {
     height: 220px;
   }
 
-  /* textos maiores */
   .produto h3 {
     font-size: 1.2rem;
   }
@@ -242,7 +239,6 @@ main {
     font-size: 1.8rem;
   }
 
-  /* quantidade maior (dedo-friendly) */
   .quantidade-container input {
     width: 80px;
     height: 45px;
@@ -250,97 +246,68 @@ main {
     text-align: center;
   }
 
-  .quantidade-container span {
-    font-size: 1.1rem;
-  }
-
-  /* botão adicionar GRANDE */
   .produto button {
     padding: 14px;
     font-size: 1.1rem;
     border-radius: 8px;
   }
 
-  /* ================= */
-  /* 🛒 CARRINHO MAIOR */
-  /* ================= */
+  /* ===================== */
+  /* DRAWER DO CARRINHO */
+  /* ===================== */
 
   #sidebar {
-    width: 100%;
-    position: static;
-    padding: 18px;
-    border-radius: 10px;
-  }
-
-  #sidebar h2 {
-    font-size: 1.4rem;
-  }
-
-  #carrinho li {
-    font-size: 1rem;
-    padding: 8px 0;
-  }
-
-  .total {
-    font-size: 1.3rem;
-  }
-
-  /* botões grandes */
-  .btn-whats,
-  .btn-limpar {
-    padding: 16px;
-    font-size: 1.1rem;
-    border-radius: 8px;
-  }
-}
-
-/* ============================= */
-/* 🛒 CARRINHO FIXO MOBILE (APP) */
-/* ============================= */
-
-#mobile-cart {
-  display: none;
-}
-
-/* somente celular */
-@media (max-width: 600px) {
-
-  #mobile-cart {
-    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #111;
-    color: white;
-    padding: 14px;
+    height: 70px;
+    background: white;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.25);
+    z-index: 9999;
+    transition: height 0.35s ease;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  #sidebar.open {
+    height: 70vh;
+  }
+
+  /* barra de puxar */
+  #cart-handle {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 9999;
-    box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
-  }
-
-  #mobile-cart span {
-    font-size: 1.2rem;
+    padding: 14px;
     font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
   }
 
-  #mobile-cart button {
-    background: #25d366;
-    border: none;
-    color: white;
-    padding: 12px 18px;
+  #cart-arrow {
+    transition: transform 0.3s;
+  }
+
+  #sidebar.open #cart-arrow {
+    transform: rotate(180deg);
+  }
+
+  #cart-content {
+    padding: 12px;
+    height: calc(70vh - 60px);
+    overflow-y: auto;
+  }
+
+  #carrinho {
+    max-height: none;
+  }
+
+  .btn-whats,
+  .btn-limpar {
+    padding: 14px;
     font-size: 1rem;
     border-radius: 8px;
-    cursor: pointer;
-  }
-
-  #mobile-cart button:active {
-    transform: scale(0.97);
-  }
-
-  /* evita conteúdo ficar escondido atrás da barra */
-  body {
-    padding-bottom: 80px;
   }
 }
