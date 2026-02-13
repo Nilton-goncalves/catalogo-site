@@ -210,11 +210,20 @@ function filtrarProdutos() {
    DRAWER DO CARRINHO (MOBILE)
 ============================ */
 
-const sidebar = document.getElementById("sidebar");
-const handle = document.getElementById("cart-handle");
+document.addEventListener("DOMContentLoaded", () => {
 
-if (handle) {
+  const sidebar = document.getElementById("sidebar");
+  const handle = document.getElementById("cart-handle");
+
+  if (!sidebar || !handle) {
+    console.log("Drawer não encontrado");
+    return;
+  }
+
   handle.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
-}
+
+});
+
+

@@ -32,17 +32,36 @@
   <section id="produtos"></section>
 
   <aside id="sidebar">
+
+  <!-- BARRA QUE ABRE O CARRINHO -->
+  <div id="cart-handle">
+    <span>🛒 Carrinho</span>
+    <span id="cart-arrow">▲</span>
+  </div>
+
+  <!-- CONTEÚDO DO CARRINHO -->
+  <div id="cart-content">
+
     <h2>Carrinho</h2>
+
     <ul id="carrinho"></ul>
-    <p class="total">Total: R$ <span id="total">0.00</span></p>
+
+    <p class="total">
+      Total: R$ <span id="total">0.00</span>
+    </p>
+
     <button onclick="enviarWhatsApp()" class="btn-whats">
       Enviar pelo WhatsApp
     </button>
-    <button onclick="limparCarrinho()" class="btn-limpar">
-  Limpar carrinho
-</button>
 
-  </aside>
+    <button onclick="limparCarrinho()" class="btn-limpar">
+      Limpar carrinho
+    </button>
+
+  </div>
+
+</aside>
+
 </main>
 
 <script src="script.js"></script>
