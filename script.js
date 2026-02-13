@@ -193,3 +193,16 @@ function limparCarrinho() {
   salvarCarrinho();
   atualizarCarrinho();
 }
+
+/* ============================
+   CARRINHO DRAWER MOBILE
+============================ */
+
+const sidebar = document.getElementById("sidebar");
+const handle = document.getElementById("cart-handle");
+
+if (handle) {
+  handle.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+  });
+}
