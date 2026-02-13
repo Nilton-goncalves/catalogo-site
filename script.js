@@ -99,6 +99,12 @@ function atualizarCarrinho() {
   });
 
   document.getElementById("total").textContent = total.toFixed(2);
+
+  const mobileTotal = document.getElementById("mobile-total");
+    if (mobileTotal) {
+  mobileTotal.textContent = total.toFixed(2);
+}
+
 }
 
 
