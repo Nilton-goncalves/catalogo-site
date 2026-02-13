@@ -185,30 +185,111 @@ main {
 
 /*acrescentado para tentar adaptr em celular*/
 
-/* CELULARES */
+/* ========================= */
+/* 📱 MOBILE REAL (CELULARES) */
+/* ========================= */
 @media (max-width: 600px) {
 
   body {
-    padding: 10px;
+    padding: 8px;
   }
 
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  /* busca maior */
+  #search {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+
+  /* layout em coluna */
   main {
     grid-template-columns: 1fr;
+    padding: 0;
     gap: 1rem;
   }
+
+  /* ✅ 1 PRODUTO POR LINHA */
+  #produtos {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* card maior */
+  .produto {
+    padding: 14px;
+    border-width: 3px;
+  }
+
+  .produto img {
+    height: 220px;
+  }
+
+  /* textos maiores */
+  .produto h3 {
+    font-size: 1.2rem;
+  }
+
+  .produto p {
+    font-size: 1rem;
+  }
+
+  .produto h4 {
+    font-size: 1.8rem;
+  }
+
+  /* quantidade maior (dedo-friendly) */
+  .quantidade-container input {
+    width: 80px;
+    height: 45px;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .quantidade-container span {
+    font-size: 1.1rem;
+  }
+
+  /* botão adicionar GRANDE */
+  .produto button {
+    padding: 14px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+  }
+
+  /* ================= */
+  /* 🛒 CARRINHO MAIOR */
+  /* ================= */
 
   #sidebar {
     width: 100%;
     position: static;
+    padding: 18px;
+    border-radius: 10px;
   }
 
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  h1 {
+  #sidebar h2 {
     font-size: 1.4rem;
-    text-align: center;
+  }
+
+  #carrinho li {
+    font-size: 1rem;
+    padding: 8px 0;
+  }
+
+  .total {
+    font-size: 1.3rem;
+  }
+
+  /* botões grandes */
+  .btn-whats,
+  .btn-limpar {
+    padding: 16px;
+    font-size: 1.1rem;
+    border-radius: 8px;
   }
 }
