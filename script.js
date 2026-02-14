@@ -8,36 +8,6 @@ let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 let total = 0;
 let produtos = [];
 
-/* ============================
-   CARREGAR PRODUTOS
-============================ */
-
-fetch(url)
-  .then(res => res.text())
-  .then(texto => {
-
-    const linhas = texto.split("\n");
-    linhas.shift();
-
-    linhas.forEach(linha => {
-      if (!linha) return;
-
-      const colunas = linha.split(",");
-
-      const produto = {
-        id: colunas[0],
-        nome: colunas[1],
-        descricao: colunas[2],
-        preco: parseFloat(colunas[3]),
-        imagem: colunas[4]
-      };
-
-      produtos.push(produto);
-    });
-
-    mostrarProdutos(produtos);
-    atualizarCarrinho();
-  });
 
 /* ============================
    CRIAR CARD PRODUTO
@@ -226,4 +196,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+/* ============================
+   CARREGAR PRODUTOS
+============================ */
+
+fetch(url)
+  .then(res => res.text())
+  .then(texto => {
+
+    const linhas = texto.split("\n");
+    linhas.shift();
+
+    linhas.forEach(linha => {
+      if (!linha) return;
+
+      const colunas = linha.split(",");
+
+      const produto = {
+        id: colunas[0],
+        nome: colunas[1],
+        descricao: colunas[2],
+        preco: parseFloat(colunas[3]),
+        imagem: colunas[4]
+      };
+
+      produtos.push(produto);
+    });
+
+    mostrarProdutos(produtos);
+    atualizarCarrinho();
+  });
 
