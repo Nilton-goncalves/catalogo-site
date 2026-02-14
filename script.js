@@ -224,3 +224,18 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(err => console.error("Erro ao carregar produtos:", err));
 
 });
+
+/* ============================
+   AUTO UPDATE (ANTI CACHE)
+============================ */
+
+const VERSION = "1.0.0";
+
+const savedVersion = localStorage.getItem("site_version");
+
+if (savedVersion !== VERSION) {
+  localStorage.setItem("site_version", VERSION);
+
+  // força reload limpo
+  window.location.reload(true);
+}
