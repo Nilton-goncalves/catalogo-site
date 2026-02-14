@@ -1,229 +1,226 @@
-/* ============================
-   CONFIG
-============================ */
-
-const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrsgLtPNUrQlyn6nuCzYsqbjvDKpoTHhXhMW1szMPiUMvxRoxU38kdICzEJunp0F5Vc6qGDwvk2JPN/pub?gid=0&single=true&output=csv";
-
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-let total = 0;
-let produtos = [];
-
-
-/* ============================
-   CRIAR CARD PRODUTO
-============================ */
-
-function criarProduto(produto) {
-
-  const div = document.createElement("div");
-  div.className = "produto";
-
-  div.innerHTML = `
-    <img src="${produto.imagem}">
-    <h3>${produto.nome}</h3>
-    <h4>R$ ${produto.preco.toFixed(2)}</h4>
-    <p>${produto.descricao}</p>
-
-    <div class="quantidade-container">
-      <input type="number" min="1" value="1">
-      <span>Qtd</span>
-    </div>
-
-    <button>Adicionar</button>
-  `;
-
-  const inputQtd = div.querySelector("input");
-  const botao = div.querySelector("button");
-
-  botao.onclick = () => {
-    adicionarAoCarrinho(produto, parseInt(inputQtd.value));
-  };
-
-  document.getElementById("produtos").appendChild(div);
-}
-
-/* ============================
-   CARRINHO
-============================ */
-
-function adicionarAoCarrinho(produto, quantidade) {
-
-  const existente = carrinho.find(p => p.id === produto.id);
-
-  if (existente) {
-    existente.quantidade += quantidade;
-  } else {
-    carrinho.push({
-      ...produto,
-      quantidade: quantidade
-    });
-  }
-
-  salvarCarrinho();
-  atualizarCarrinho();
-}
-
-function atualizarCarrinho() {
-
-  const ul = document.getElementById("carrinho");
-  ul.innerHTML = "";
-  total = 0;
-
-  carrinho.forEach((item, index) => {
-
-    const subtotal = item.preco * item.quantidade;
-    total += subtotal;
-
-    const li = document.createElement("li");
-
-    li.style.display = "flex";
-    li.style.justifyContent = "space-between";
-    li.style.alignItems = "center";
-
-    li.innerHTML = `
-      <span>
-        ${item.nome} (${item.quantidade}x) - R$ ${subtotal.toFixed(2)}
-      </span>
-      <button onclick="removerItem(${index})">❌</button>
-    `;
-
-    ul.appendChild(li);
-  });
-
-  document.getElementById("total").textContent = total.toFixed(2);
-}
-
-function salvarCarrinho() {
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
-}
-
-function removerItem(index) {
-  carrinho.splice(index, 1);
-  salvarCarrinho();
-  atualizarCarrinho();
-}
-
-function limparCarrinho() {
-  if (!confirm("Deseja realmente limpar o carrinho?")) return;
-
-  carrinho = [];
-  salvarCarrinho();
-  atualizarCarrinho();
-}
-
-/* ============================
-   WHATSAPP
-============================ */
-
-function enviarWhatsApp() {
-
-  if (carrinho.length === 0) {
-    alert("Carrinho vazio!");
-    return;
-  }
-
-  let mensagem = "🛒 *NOVO PEDIDO*\n";
-  mensagem += "━━━━━━━━━━━━━━━━━━\n\n";
-
-  carrinho.forEach((item, index) => {
-
-    mensagem += `📦 *Item ${index + 1}*\n`;
-    mensagem += `${item.nome}\n`;
-    mensagem += `Quantidade: ${item.quantidade}\n`;
-    mensagem += `Valor unitário: R$ ${item.preco.toFixed(2)}\n`;
-    mensagem += `Subtotal: R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
-    mensagem += "--------------------------\n";
-  });
-
-  mensagem += "\n";
-  mensagem += `💰 *TOTAL DO PEDIDO:* R$ ${total.toFixed(2)}\n`;
-  mensagem += "━━━━━━━━━━━━━━━━━━\n";
-  mensagem += "Obrigado pela preferência! 😊";
-
-  const telefone = ""; // coloque seu número aqui
-  const urlWhats = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-
-  window.open(urlWhats, "_blank");
-}
-
-/* ============================
-   BUSCA DE PRODUTOS
-============================ */
-
-function removerAcentos(texto) {
-  return texto
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-function filtrarProdutos() {
-
-  const input = document.getElementById("search");
-  const filtro = removerAcentos(input.value);
-
-  const produtos = document.querySelectorAll("#produtos .produto");
-
-  produtos.forEach(produto => {
-
-    const nomeProduto = removerAcentos(produto.textContent);
-
-    if (nomeProduto.includes(filtro)) {
-      produto.style.display = "block";
-    } else {
-      produto.style.display = "none";
-    }
-  });
-}
-
-/* ============================
-   DRAWER DO CARRINHO (MOBILE)
-============================ */
+/* ===================================================
+   APP CATALOGO - ESTRUTURA PROFISSIONAL
+=================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* ============================
+     CONFIG
+  ============================ */
+
+  const url =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrsgLtPNUrQlyn6nuCzYsqbjvDKpoTHhXhMW1szMPiUMvxRoxU38kdICzEJunp0F5Vc6qGDwvk2JPN/pub?gid=0&single=true&output=csv";
+
+  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  let produtos = [];
+  let total = 0;
+
+  /* ============================
+     ELEMENTOS DOM
+  ============================ */
+
+  const elProdutos = document.getElementById("produtos");
+  const elCarrinho = document.getElementById("carrinho");
+  const elTotal = document.getElementById("total");
   const sidebar = document.getElementById("sidebar");
   const handle = document.getElementById("cart-handle");
 
-  if (!sidebar || !handle) {
-    console.log("Drawer não encontrado");
-    return;
+  /* ============================
+     PRODUTOS
+  ============================ */
+
+  function criarProduto(produto) {
+
+    const div = document.createElement("div");
+    div.className = "produto";
+
+    div.innerHTML = `
+      <img src="${produto.imagem}">
+      <h3>${produto.nome}</h3>
+      <h4>R$ ${produto.preco.toFixed(2)}</h4>
+      <p>${produto.descricao}</p>
+
+      <div class="quantidade-container">
+        <input type="number" min="1" value="1">
+        <span>Qtd</span>
+      </div>
+
+      <button>Adicionar</button>
+    `;
+
+    const inputQtd = div.querySelector("input");
+    const botao = div.querySelector("button");
+
+    botao.addEventListener("click", () => {
+      adicionarAoCarrinho(produto, parseInt(inputQtd.value));
+    });
+
+    elProdutos.appendChild(div);
   }
 
-  handle.addEventListener("click", () => {
+  function mostrarProdutos(lista) {
+    elProdutos.innerHTML = "";
+    lista.forEach(criarProduto);
+  }
+
+  /* ============================
+     CARRINHO
+  ============================ */
+
+  function salvarCarrinho() {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  }
+
+  function adicionarAoCarrinho(produto, quantidade) {
+
+    const existente = carrinho.find(p => p.id === produto.id);
+
+    if (existente) {
+      existente.quantidade += quantidade;
+    } else {
+      carrinho.push({ ...produto, quantidade });
+    }
+
+    salvarCarrinho();
+    atualizarCarrinho();
+
+    // abre automaticamente no mobile (UX melhor)
+    sidebar?.classList.add("open");
+  }
+
+  function atualizarCarrinho() {
+
+    elCarrinho.innerHTML = "";
+    total = 0;
+
+    carrinho.forEach((item, index) => {
+
+      const subtotal = item.preco * item.quantidade;
+      total += subtotal;
+
+      const li = document.createElement("li");
+
+      li.innerHTML = `
+        <span>${item.nome} (${item.quantidade}x) - R$ ${subtotal.toFixed(2)}</span>
+        <button data-index="${index}">❌</button>
+      `;
+
+      li.style.display = "flex";
+      li.style.justifyContent = "space-between";
+      li.style.alignItems = "center";
+
+      li.querySelector("button").onclick = () => removerItem(index);
+
+      elCarrinho.appendChild(li);
+    });
+
+    elTotal.textContent = total.toFixed(2);
+  }
+
+  function removerItem(index) {
+    carrinho.splice(index, 1);
+    salvarCarrinho();
+    atualizarCarrinho();
+  }
+
+  window.limparCarrinho = function () {
+    if (!confirm("Deseja realmente limpar o carrinho?")) return;
+
+    carrinho = [];
+    salvarCarrinho();
+    atualizarCarrinho();
+  };
+
+  /* ============================
+     WHATSAPP
+  ============================ */
+
+  window.enviarWhatsApp = function () {
+
+    if (!carrinho.length) {
+      alert("Carrinho vazio!");
+      return;
+    }
+
+    let mensagem = "🛒 *NOVO PEDIDO*\n━━━━━━━━━━━━━━━━━━\n\n";
+
+    carrinho.forEach((item, i) => {
+      mensagem += `📦 *Item ${i + 1}*\n`;
+      mensagem += `${item.nome}\n`;
+      mensagem += `Quantidade: ${item.quantidade}\n`;
+      mensagem += `Subtotal: R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+      mensagem += "--------------------------\n";
+    });
+
+    mensagem += `\n💰 *TOTAL:* R$ ${total.toFixed(2)}\n`;
+
+    const telefone = "";
+    const link = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+    window.open(link, "_blank");
+  };
+
+  /* ============================
+     BUSCA
+  ============================ */
+
+  function normalizar(txt) {
+    return txt.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  }
+
+  window.filtrarProdutos = function () {
+
+    const filtro = normalizar(
+      document.getElementById("search").value
+    );
+
+    document.querySelectorAll(".produto").forEach(card => {
+
+      const texto = normalizar(card.textContent);
+
+      card.style.display =
+        texto.includes(filtro) ? "block" : "none";
+    });
+  };
+
+  /* ============================
+     DRAWER MOBILE
+  ============================ */
+
+  handle?.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
+  /* ============================
+     FETCH PRODUTOS
+  ============================ */
+
+  fetch(url)
+    .then(res => res.text())
+    .then(texto => {
+
+      const linhas = texto.split("\n");
+      linhas.shift();
+
+      linhas.forEach(linha => {
+        if (!linha) return;
+
+        const c = linha.split(",");
+
+        produtos.push({
+          id: c[0],
+          nome: c[1],
+          descricao: c[2],
+          preco: parseFloat(c[3]),
+          imagem: c[4]
+        });
+      });
+
+      mostrarProdutos(produtos);
+      atualizarCarrinho();
+    })
+    .catch(err => console.error("Erro ao carregar produtos:", err));
+
 });
-
-/* ============================
-   CARREGAR PRODUTOS
-============================ */
-
-fetch(url)
-  .then(res => res.text())
-  .then(texto => {
-
-    const linhas = texto.split("\n");
-    linhas.shift();
-
-    linhas.forEach(linha => {
-      if (!linha) return;
-
-      const colunas = linha.split(",");
-
-      const produto = {
-        id: colunas[0],
-        nome: colunas[1],
-        descricao: colunas[2],
-        preco: parseFloat(colunas[3]),
-        imagem: colunas[4]
-      };
-
-      produtos.push(produto);
-    });
-
-    mostrarProdutos(produtos);
-    atualizarCarrinho();
-  });
-
